@@ -26,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
         // load only in development
         if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+            $this->app->alias('Debugbar', \Barryvdh\Debugbar\Facade::class);
+
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
 
