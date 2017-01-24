@@ -14,3 +14,21 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth'],
+    'as' => 'admin.', 'namespace' => 'Admin'], function () {
+
+    Route::group(['prefix' => '{clan}'], function() {
+
+        Route::resource('user', UserController::class);
+
+        Route::group(['prefix' => 'user/{user}', 'as' => 'user.', 'namespace' => 'User'], function () {
+
+            Route::resource('sector', SectorController::class, ['except' => ['index', 'show']]);
+        });
+    });
+});
